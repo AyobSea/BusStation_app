@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+
+final Color busblackBlue = Color(0xff03071E);
+final Color busyellow = Color(0xffF9AE5D);
+final Color busclay = Color(0xff2B2942);
+final Color busBackground = Color(0xffF7F9FF);
+final Color busIcon = Color(0xff608DF7);
+final Color busbottom = Color(0xffE9EFFF);
+
+
+final firstButton = ElevatedButton.styleFrom(
+  primary: Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(5),
+  ),
+  side: BorderSide(width: 1, color: busyellow),
+  minimumSize: Size.fromHeight(60),
+);
+
+final secondButton = ElevatedButton.styleFrom(
+  primary: busyellow,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(5),
+  ),
+  side: const BorderSide(width: 1, color: Colors.white),
+  minimumSize: const Size.fromHeight(60),
+);
+// style: TextStyle(fontSize: 24, color: busblackBlue),
+
+final bText =
+    TextStyle(fontSize: 24, color: busblackBlue);
