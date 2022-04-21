@@ -53,6 +53,8 @@ dependencies:
   sliding_sheet: ^0.5.2
   image_picker: ^0.8.5
   firebase_storage: ^10.2.10
+  flutter_barcode_scanner: ^2.0.0
+  im_stepper: ^0.1.3
   
   
 

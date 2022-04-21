@@ -132,7 +132,7 @@ class _AccountState extends State<Account> {
                     child: CircleAvatar(
                       child: Stack(
                         children: [
-                        Align(
+                                   Align(
                           alignment: Alignment.bottomRight,
                           child: CircleAvatar(
                             radius: 50,
@@ -185,22 +185,22 @@ class _AccountState extends State<Account> {
                 children: [
                   UserDataField(
                     data: userData['name'],
-                    type: 'User Name',
+                    type: 'user name',
                   ),
                   Divider(color: Colors.black),
                   UserDataField(
                     data: userData['first'],
-                    type: 'First',
+                    type: 'first',
                   ),
                   Divider(color: Colors.black),
                   UserDataField(
                     data: userData['last'],
-                    type: 'Last',
+                    type: 'last',
                   ),
                   Divider(color: Colors.black),
                   UserDataField(
                     data: userData['street'],
-                    type: 'Street',
+                    type: 'street',
                   ),
                   Container(
                       width: 230,
@@ -209,126 +209,15 @@ class _AccountState extends State<Account> {
                         child: Text(
                           'Edit Profile',
                           style: bText,
-                        ),
+                                    ),
                         style: firstButton,
                       )),
                 ],
               ),
-            ]);
-            // Container(
-            //   height: 180,
-            //   decoration: BoxDecoration(
-            //     color: busblackBlue,
-            //     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(180), bottomRight: Radius.circular(180))
-            //   ),
-            // ),
-
-            // return Padding(
-            //   padding: const EdgeInsets.all(12.0),
-            //   child: Column(
-            //     children: [
-            //       SizedBox(height: 100),
-            //       Stack(children: [
-            //         ElevatedButton(
-            //             onPressed: () {
-            //               _signOut();
-
-            //               Navigator.pushReplacement(
-            //                 context,
-            //                 MaterialPageRoute<void>(
-            //                   builder: (BuildContext context) =>
-            //                       const LoginScreen(),
-            //                 ),
-            //               );
-            //             },
-            //             child: Text('')),
-            //         SizedBox(
-            //           height: 620,
-            //           child: Padding(
-            //             padding: EdgeInsets.only(top: 70),
-            //             child: Card(
-            //               color: busblackBlue,
-            //               child: Padding(
-            //                 padding: const EdgeInsets.only(top: 300),
-            //                 child: Column(
-            //                   mainAxisAlignment:
-            //                       MainAxisAlignment.spaceEvenly,
-            //                   crossAxisAlignment: CrossAxisAlignment.stretch,
-            //                   // mainAxisSize: MainAxisSize.min,
-
-            //                   children: [
-            //                     // SizedBox(height: 100, width: 300),
-            //                     UserDataField(
-            //                       data: userData['name'],
-            //                       type: 'Username',
-            //                     ),
-            //                     Divider(color: Colors.white),
-            //                     UserDataField(
-            //                       data: userData['first'],
-            //                       type: 'first',
-            //                     ),
-            //                     Divider(color: Colors.white),
-            //                     UserDataField(
-            //                       data: userData['last'],
-            //                       type: 'last',
-            //                     ),
-            //                     Divider(color: Colors.white),
-            //                     UserDataField(
-            //                       data: userData['street'],
-            //                       type: 'street',
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.only(top: 20, left: 120),
-            //           child: CircleAvatar(
-            //             radius: 50,
-            //             backgroundColor: Colors.grey,
-            //           ),
-            //         ),
-            //         image != null
-            //             ? Padding(
-            //                 padding: EdgeInsets.all(0),
-            //                 child: Center(
-            //                   child: CircleAvatar(
-            //                     backgroundColor: busyellow,
-            //                     radius: 80,
-            //                     child: CircleAvatar(
-            //                       radius: 75,
-            //                       backgroundImage: FileImage(
-            //                         image!,
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               )
-            //             : Text("No image selected"),
-            //         Padding(
-            //           padding: EdgeInsets.only(top: 110, left: 110),
-            //           child: Center(
-            //             child: ElevatedButton(
-            //               onPressed: () {
-            //                 uploadPic();
-            //               },
-            //               child: Icon(Icons.image, color: Colors.white),
-            //               style: ElevatedButton.styleFrom(
-            //                 shape: CircleBorder(),
-            //                 padding: EdgeInsets.all(5),
-            //                 primary: Colors.red, // <-- Button color
-            //                 onPrimary: Colors.black, // <-- Splash color
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       ])
-            //     ],
-            //   ),
-            // );
-          }),
+            ]
+            );
+             }
+             ),
     );
   }
 }

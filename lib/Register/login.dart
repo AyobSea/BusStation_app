@@ -86,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                      Fields(
+                      // const SizedBox(height: 30),
+                      LoginFields(
                         icon: Icon(Icons.person, color: Colors.white,),
                         type: TextInputType.emailAddress,
                         star: false,
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         name: 'an email',
                       ),
-                      Fields(
+                      LoginFields(
                         icon: Icon(Icons.lock, color: Colors.white),
                         type: TextInputType.name,
                         star: true,
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           headerBuilder: (context, state) {
             return Container(
-              color: busyellow,
+              color: busIcon,
               // decoration: BoxDecoration(
               //   border: Border.all(
               //     color: busblackBlue
@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
          Widget buildSheet(context, state) => Material(
           child: Container(
-        color: busblackBlue,
+        color: busclay,
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -234,16 +234,17 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                 'Register',
                 style: TextStyle(
-                    fontSize: 44,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: busyellow),
+                    color: busIcon),
                 textAlign: TextAlign.center,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.person, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
                 onChanged: (String value) {
@@ -255,7 +256,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.person, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
                 onChanged: (String value) {
@@ -267,7 +269,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.person, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
                 onChanged: (String value) {
@@ -279,7 +282,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.person, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.emailAddress,
                 star: false,
                 onChanged: (String value) {
@@ -291,7 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.lock, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.lock, color: busclay),
                 type: TextInputType.name,
                 star: true,
                 onChanged: (String value) {
@@ -303,7 +308,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                icon: Icon(Icons.person, color: Colors.white),
+                fill: busbottom,
+                icon: Icon(Icons.person, color: busclay),
                   onChanged: (String value) {
                     _street = value;
                   },
@@ -312,69 +318,61 @@ class _LoginScreenState extends State<LoginScreen> {
                   star: false),
             ),
             const SizedBox(height: 25),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: busyellow,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            Container(
+              width: 360,
+              child: ElevatedButton(
+                style: secondButton,
+                child: Text(
+                  'Sign up',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: busblackBlue,
+                  ),
                 ),
-                side: BorderSide(width: 2, color: busblackBlue),
-                minimumSize: const Size.fromHeight(60),
-              ),
-              child: Text(
-                'Sign up',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: busblackBlue,
-                ),
-              ),
-              onPressed: () async {
-                await _auth
-                    .createUserWithEmailAndPassword(
-                        email: _email, password: _password)
-                    .then(
-                  (value) async {
-                    await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(value.user!.uid)
-                        .set({
-                      'name': _username,
-                      'first': _firstname,
-                      'last': _lastname,
-                      'street': _street,
-                      'role': false,
-                    });
+                onPressed: () async {
+                  await _auth
+                      .createUserWithEmailAndPassword(
+                          email: _email, password: _password)
+                      .then(
+                    (value) async {
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(value.user!.uid)
+                          .set({
+                        'name': _username,
+                        'first': _firstname,
+                        'last': _lastname,
+                        'street': _street,
+                        'role': false,
+                      });
 
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const UserChooseLocation()
-                        )
-                        );
-                  },
-                );
-              },
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const UserChooseLocation()
+                          )
+                          );
+                    },
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            Container(
+              width: 360,
+              child: ElevatedButton(
+                style: firstButton,
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: busblackBlue,
+                  ),
                 ),
-                side: BorderSide(width: 2, color: busblackBlue),
-                minimumSize: const Size.fromHeight(60),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  );
+                },
               ),
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: busblackBlue,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
             ),
           ],
         ),
@@ -384,6 +382,60 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class Fields extends StatelessWidget {
   Fields(
+      {Key? key,
+      required this.onChanged,
+      required this.name,
+      required this.type,
+      required this.star, 
+      required this.icon, required this.fill})
+      : super(key: key);
+
+  final Function(String) onChanged;
+  final String name;
+  final TextInputType type;
+  final bool star;
+  final Icon icon;
+  final Color fill;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: TextField(
+          style: TextStyle(color: busclay),
+          keyboardType: type,
+          obscureText: star,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: fill,
+             prefixIcon: icon, 
+            // focusColor: Colors.white,
+            hintText: (' Enter $name '),
+            hintStyle:  TextStyle(
+                color: busclay,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+            enabledBorder:  OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: busclay),
+            ),
+            focusedBorder:  OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: busclay),
+            ),
+          ),
+          onChanged: onChanged,
+        ),
+      ),
+    );
+  }
+}
+
+
+class LoginFields extends StatelessWidget {
+  LoginFields(
       {Key? key,
       required this.onChanged,
       required this.name,
@@ -406,22 +458,24 @@ class Fields extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: ConstrainedBox(
           constraints: const BoxConstraints.tightFor(width: 300),
-          child: TextField( 
-            style: const TextStyle(color: Colors.white),
+          child: TextField(
+            style: TextStyle(color: Colors.white),
             keyboardType: type,
             obscureText: star,
             decoration: InputDecoration(
                prefixIcon: icon, 
               // focusColor: Colors.white,
               hintText: (' Enter $name '),
-              hintStyle: const TextStyle(
+              hintStyle:  TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
-              enabledBorder: const UnderlineInputBorder(
+              enabledBorder:  OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(color: Colors.white),
               ),
-              focusedBorder: const OutlineInputBorder(
+              focusedBorder:  OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(color: Colors.white),
               ),
             ),

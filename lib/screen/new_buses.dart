@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:busproject/Register/register_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,21 +16,14 @@ class NewBuses extends StatefulWidget {
 
 class _NewBusesState extends State<NewBuses> {
   final _auth = FirebaseAuth.instance.currentUser;
-  final addressCountryController = TextEditingController();
 
-    @override
-  void dispose() {
-    addressCountryController.dispose();
-    super.dispose();
-  }
+  int stationsChanged = 0;
+
 
   String selected = 'please select';
-  String holder = '';
-
-  
 
   String? from;
-  String? to;
+  String? too;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,46 +45,7 @@ class _NewBusesState extends State<NewBuses> {
               dropdownValues.add((docs.data() as Map<String, dynamic>)['name']);
             }
 
-            return SlidingSheet(
-              elevation: 8,
-              cornerRadius: 16,
-              snapSpec: const SnapSpec(
-                snap: true,
-                snappings: [0.4, 0.7, 1.0],
-                positioning: SnapPositioning.relativeToAvailableSpace,
-              ),
-
-              headerBuilder: (context, state) {
-                return Container(
-                  color: busIcon,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(
-                  //     color: busblackBlue
-                  //   )
-                  // ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 12),
-                      Center(
-                        child: Container(
-                          height: 8,
-                          width: 32,
-                          // color: Colors.green,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
-                );
-              },
-              // The body widget will be displayed under the SlidingSheet
-              // and a parallax effect can be applied to it.
-              body: Center(
+            return Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -107,46 +62,51 @@ class _NewBusesState extends State<NewBuses> {
                                 Column(
                                   children: [
                                     Padding(
-                                        padding: EdgeInsets.only(right: 120),
-                                        child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'From : ',
-                                              style: TextStyle(fontSize: 19),
-                                            ),),),
-                                    SelectStation(
-                                        // selected: selected,
-                                        dropdownValues: dropdownValues,
-                                        value: from,
-                                        onChanged: (newValue){
-                                          setState(() {
-                                            from = newValue;
-
-                                          });
-                                        },
+                                      padding: EdgeInsets.only(right: 120),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'From : ',
+                                          style: TextStyle(fontSize: 19),
                                         ),
+                                      ),
+                                    ),
+                                    SelectStation(
+                                      // selected: selected,
+                                      dropdownValues: dropdownValues,
+                                      value: from,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          from = newValue;
+                                          stationsChanged =  Random().nextInt(11 - 1);
+                                        });
+                                      },
+                                    ),
                                   ],
                                 ),
                                 SizedBox(width: 20),
                                 Column(
                                   children: [
                                     Padding(
-                                        padding: EdgeInsets.only(right: 120),
-                                        child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Text(
-                                              'To :',
-                                              style: TextStyle(fontSize: 19),
-                                            ),),),
-                                    SelectStation(
-                                      // selected: selected,
-                                      dropdownValues: dropdownValues,
-                                      value: to,
-                                      onChanged: (String? newValue) {
-                                        to = newValue as String;
-                                      }
-                                      
+                                      padding: EdgeInsets.only(right: 120),
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          'To :',
+                                          style: TextStyle(fontSize: 19),
+                                        ),
+                                      ),
                                     ),
+                                    SelectStation(
+                                        // selected: selected,
+                                        dropdownValues: dropdownValues,
+                                        value: too,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            too = newValue;
+                                            stationsChanged =  Random().nextInt(6 - 1);
+                                          });
+                                        }),
                                   ],
                                 )
                               ],
@@ -154,25 +114,38 @@ class _NewBusesState extends State<NewBuses> {
                             selectDate(
                                 selected: selected,
                                 dropdownValues: dropdownValues),
-                            Container(
-                              color: Color(0xffFFF7EE),
-                              height: 500,
-                              child: Center(
-                                  // child: Text(from)
-                                      ),
-                            ),
-                            
                           ],
                         ),
                       ),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft:  Radius.circular(40), topRight: Radius.circular(40)),
+                          color: busclay
+                        ),
+                        child: ListView.builder(
+                        itemCount: 1 + stationsChanged,
+                        itemBuilder: (context, index) {
+                          return Center(
+                            child: Row(
+                              children: [
+                                SizedBox(width: 80),
+                                Text(from ?? 'from',
+                                    style: TextStyle(fontSize: 26, color: Colors.white)),
+                                SizedBox(width: 20),
+                                Text(too ?? 'too', 
+                                style: TextStyle(fontSize: 26, color: Colors.white)),
+                                SizedBox(width: 90),
+                                ElevatedButton(onPressed: () {}, child: Text('ujf'))
+                              ],
+                            ),
+                          );
+                        }),
+                      ),)
                     ]),
-              ),
-              builder: (context, state) {
-                // This is the content of the sheet that will get
-                // scrolled, if the content is bigger than the available
-                // height of the sheet.
-                return Container();
-              },
+              
+             
             );
           }),
     );
@@ -184,7 +157,8 @@ class SelectStation extends StatelessWidget {
     Key? key,
     // required this.selected,
     required this.dropdownValues,
-    required this.onChanged, required this.value,
+    required this.onChanged,
+    required this.value,
   }) : super(key: key);
 
   final Function(String?) onChanged;
@@ -219,10 +193,10 @@ class SelectStation extends StatelessWidget {
           value: value,
           items: dropdownValues.map((e) {
             return DropdownMenuItem(value: e, child: Text(e));
-          }).toList(), 
-            // onChanged: (String? value) {
+          }).toList(),
+          // onChanged: (String? value) {
 
-            // },
+          // },
           onChanged: onChanged,
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:busproject/screen/account_profile.dart';
 import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/screen/barcode.dart';
 import 'package:busproject/screen/new_buses.dart';
+import 'package:busproject/screen/new_home_screen.dart';
 import 'package:busproject/useless/chooselocation.dart';
 import 'package:busproject/screen/comments.dart';
 import 'package:busproject/useless/dummies_detail.dart';
@@ -16,21 +18,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int side = 1;
+  int side = 2;
 
   
 
   final List<Widget> screen = [
     Comments(),
-    StationDetails(),
     Account(),
+    NewHome(),
+    StationDetails(),
+    Barcode(),
   ];
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[
+      const Icon(Icons.comment, color: Colors.white,),
+      const Icon(Icons.person, color: Colors.white,),
       const Icon(Icons.home, color: Colors.white,),
       const Icon(Icons.search, color: Colors.white,),
-      const Icon(Icons.person, color: Colors.white,),
+      const Icon(Icons.camera, color: Colors.white,),
     ];
     return Scaffold(
       extendBody: true,

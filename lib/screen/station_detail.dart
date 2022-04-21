@@ -1,4 +1,5 @@
 import 'package:busproject/screen/buses.dart';
+import 'package:busproject/screen/get_comments.dart';
 import 'package:busproject/screen/new_buses.dart';
 import 'package:busproject/useless/dummies.dart';
 import 'package:busproject/useless/dummies_direction.dart';
@@ -6,10 +7,13 @@ import 'package:busproject/useless/spd_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:busproject/Register/register_styles.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
+
 
 class StationDetails extends StatefulWidget {
 
@@ -24,6 +28,12 @@ class _StationDetailsState extends State<StationDetails> {
   // Position? _currentUserPosition;
   double? distanceImMeter = 0.0;
   Data data = Data();
+  String _scanBarcode = 'Unknown';
+
+    @override
+  void initState() {
+    super.initState();
+  }
 
   getDetails(Map singleCityData, BuildContext context) {
     print(singleCityData);
@@ -37,6 +47,26 @@ class _StationDetailsState extends State<StationDetails> {
     );
     }
 
+      Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +164,7 @@ class _StationDetailsState extends State<StationDetails> {
                                         onPressedb: () {Navigator.pushNamed(context, Buses.id);},
                                         
                                   ),
-                                  iconButton(
+                                   iconButton(
                                     icon: Icon(Icons.share_location,
                                         color: Colors.white),
                                         onPressedb: () {
@@ -146,13 +176,16 @@ class _StationDetailsState extends State<StationDetails> {
                                     icon: Icon(Icons.device_unknown,
                                         color: Colors.white),
                                         onPressedb: () {
-                                         Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const NewBuses()));
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const GetComments()));
+                                      //    Navigator.of(context).push(MaterialPageRoute(
+                                      // builder: (context) => const NewBuses()));
                                         },
                                   ),
                                 ],
                               ),
                             ),
+                            FloatingActionButton(onPressed: scanBarcodeNormal, child: Icon(Icons.code),)
                           ],
                         ),
                       ),

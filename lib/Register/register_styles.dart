@@ -6,19 +6,20 @@ final Color busclay = Color(0xff2B2942);
 final Color busBackground = Color(0xffF7F9FF);
 final Color busIcon = Color(0xff608DF7);
 final Color busbottom = Color(0xffE9EFFF);
-
+final Color test = Color(0xffA8AABC);
+final Color busExpand = Color(0xffD2A517);
 
 final firstButton = ElevatedButton.styleFrom(
   primary: Colors.white,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(5),
   ),
-  side: BorderSide(width: 1, color: busyellow),
+  side: BorderSide(width: 1, color: test),
   minimumSize: Size.fromHeight(60),
 );
 
 final secondButton = ElevatedButton.styleFrom(
-  primary: busyellow,
+  primary: test,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(5),
   ),
