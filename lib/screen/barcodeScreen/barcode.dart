@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:busproject/Register/register_styles.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Barcode extends StatefulWidget {
   const Barcode({Key? key}) : super(key: key);
@@ -12,7 +17,7 @@ class Barcode extends StatefulWidget {
 }
 
 class _BarcodeState extends State<Barcode> {
-  String _scanBarcode = 'Unknown';
+  String? _scanBarcode = 'Unknown';
 
   @override
   void initState() {
@@ -68,11 +73,20 @@ class _BarcodeState extends State<Barcode> {
     });
   }
 
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode scan')),
+            backgroundColor: busbottom,
             body: Builder(builder: (BuildContext context) {
               return Container(
                   alignment: Alignment.center,
@@ -80,21 +94,46 @@ class _BarcodeState extends State<Barcode> {
                       direction: Axis.vertical,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
+                        Center(
+                          child: Image(image: AssetImage('images/scanMe.png')),
+                        ),
+
+                        // TextButton(onPressed: () async {
+                        //   final url = 'Scan result : $_scanBarcode\n';
+
+                        //   if (await canLaunchUrlString(url)) {
+                        //     await launchUrlString(url);
+                        //   }
+                        // }, child: Text('راىلالا')
+                        // ),
+                        
+                        SizedBox(height: 20),
+                        Container(
+                          width: 180,
+                          child: ElevatedButton(
                             onPressed: () => scanBarcodeNormal(),
-                            child: Text('Start barcode scan')),
-                        ElevatedButton(
-                            onPressed: () => scanQR(),
-                            child: Text('Start QR scan')),
-                        ElevatedButton(
-                            onPressed: () => startBarcodeScanStream(),
-                            child: Text('Start barcode scan stream')),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20))
+                            child: Text('Start barcode scan'),
+                            style: secondButton,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        SelectableLinkify(
+                          onOpen: _onOpen,
+                          // textScaleFactor: 4,
+                          text: 'Scan result : $_scanBarcode\n',
+                        ),
+
+                        // Text('Scan result : $_scanBarcode\n',
+                        //     style: TextStyle(fontSize: 20))
                       ]));
-            }
-            )
-            )
-            );
+            })));
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    final url = 'Scan result : $_scanBarcode\n';
+
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    }
   }
 }

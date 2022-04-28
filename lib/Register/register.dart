@@ -1,7 +1,7 @@
+import 'package:busproject/screen/chooseScreen/map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../screen/map.dart';
 import 'package:busproject/Register/login.dart';
 
 
@@ -127,116 +127,6 @@ class _RegisterState extends State<Register> {
                         type: TextInputType.name, 
                         star: false
                         ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     keyboardType: TextInputType.name,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'User Name',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (String value) {
-                      //       _username = value;
-                      //     },
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     keyboardType: TextInputType.emailAddress,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'Email',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (value) {
-                      //       setState(
-                      //         () {
-                      //           _email = value.trim();
-                      //         },
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     obscureText: true,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'Password',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (value) {
-                      //       setState(
-                      //         () {
-                      //           _password = value.trim();
-                      //         },
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     keyboardType: TextInputType.name,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'first name',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (String value) {
-                      //       _firstname = value;
-                      //     },
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     keyboardType: TextInputType.name,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'last name',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (String value) {
-                      //       _lastname = value;
-                      //     },
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: TextField(
-                      //     style: TextStyle(color: Colors.white),
-                      //     keyboardType: TextInputType.name,
-                      //     decoration: const InputDecoration(
-                      //       hintText: 'street',
-                      //       hintStyle: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     onChanged: (String value) {
-                      //       _street = value;
-                      //     },
-                      //   ),
-                      // ),
                       SizedBox(height: 25),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

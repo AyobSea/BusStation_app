@@ -1,5 +1,5 @@
 import 'package:busproject/Register/register_styles.dart';
-import 'package:busproject/screen/station_detail.dart';
+import 'package:busproject/screen/choose_station/station_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,15 +1,12 @@
-import 'package:busproject/screen/account_profile.dart';
+import 'package:busproject/screen/accountScreen/account_profile.dart';
 import 'package:busproject/Register/register_styles.dart';
-import 'package:busproject/screen/barcode.dart';
-import 'package:busproject/screen/new_buses.dart';
+import 'package:busproject/screen/barcodeScreen/barcode.dart';
 import 'package:busproject/screen/new_home_screen.dart';
-import 'package:busproject/useless/chooselocation.dart';
-import 'package:busproject/screen/comments.dart';
-import 'package:busproject/useless/dummies_detail.dart';
+import 'package:busproject/screen/commentsScreen/comments.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'station_detail.dart';
+import 'choose_station/station_detail.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'homeScreen';
@@ -23,8 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   
 
   final List<Widget> screen = [
-    Comments(),
     Account(),
+    Comments(),
     NewHome(),
     StationDetails(),
     Barcode(),
@@ -32,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[
-      const Icon(Icons.comment, color: Colors.white,),
       const Icon(Icons.person, color: Colors.white,),
+      const Icon(Icons.comment, color: Colors.white,),
       const Icon(Icons.home, color: Colors.white,),
       const Icon(Icons.search, color: Colors.white,),
       const Icon(Icons.camera, color: Colors.white,),

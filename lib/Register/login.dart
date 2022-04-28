@@ -1,7 +1,7 @@
 import 'package:busproject/Register/register_styles.dart';
 import 'package:busproject/adminside/admin_home.dart';
+import 'package:busproject/screen/chooseScreen/map.dart';
 import 'package:busproject/screen/home_screen.dart';
-import 'package:busproject/screen/map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,17 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
-                              padding: EdgeInsets.all(50),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: busBackground
-                              ),
+                              // padding: EdgeInsets.all(50),
                               child: Text(
                                 'LOGIN',
                                 style: TextStyle(
                                   fontSize: 44,
                                   fontWeight: FontWeight.bold,
-                                  color: busclay
+                                  color: Colors.white
                                 ),
                                 textAlign: TextAlign.center,
                               ),

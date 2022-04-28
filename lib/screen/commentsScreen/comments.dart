@@ -15,7 +15,8 @@ class _CommentsState extends State<Comments> {
   late String _username, _description;
   String? _text;
 
-  TextEditingController controller = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController commController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -93,7 +94,7 @@ class _CommentsState extends State<Comments> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'enter your user name'),
-                        controller: controller,
+                        controller: nameController,
                         onChanged: (String value) {
                       _username = value;
                     },
@@ -107,7 +108,7 @@ class _CommentsState extends State<Comments> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'enter your feedback'),
-                        controller: controller,
+                        controller: commController,
                     onChanged: (String value) {
                       _description = value;
                     },
@@ -124,7 +125,10 @@ class _CommentsState extends State<Comments> {
                         'description': _description,
                       });
                       setState(() {
-                        controller.clear();
+                        nameController.clear();
+                      });
+                      setState(() {
+                        commController.clear();
                       });
 
                       // .add({'name': _stationName, 'description': _stationDec});

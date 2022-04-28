@@ -1,12 +1,8 @@
 import 'package:busproject/Register/login.dart';
 import 'package:busproject/Register/register.dart';
-import 'package:busproject/adminside/admin_add_info.dart';
 import 'package:busproject/adminside/admin_add_location.dart';
-import 'package:busproject/adminside/admin_home.dart';
-import 'package:busproject/screen/account_profile.dart';
 import 'package:busproject/screen/buses.dart';
 import 'package:busproject/screen/home_screen.dart';
-import 'package:busproject/useless/dummies_direction.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -57,7 +53,7 @@ class BusStation extends StatelessWidget {
       title: 'Login App',
       home:  Scaffold(
 
-        body: AdminHomePage()
+        body: HomeScreen()
         
          ),
     );

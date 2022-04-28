@@ -103,7 +103,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: busBackground,
+      backgroundColor: busbottom,
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('users')
@@ -128,20 +128,20 @@ class _AccountState extends State<Account> {
                     clipper: WaveClipper1(),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 90, left: 160),
+                    padding: EdgeInsets.only(top: 80, left: 128),
                     child: CircleAvatar(
                       child: Stack(
                         children: [
                                    Align(
                           alignment: Alignment.bottomRight,
                           child: CircleAvatar(
-                            radius: 50,
+                            radius: 80,
                             backgroundColor: Colors.white70,
                             child: Icon(Icons.camera),
                           ),
                         ),
                       ]),
-                      radius: 50,
+                      radius: 75,
                       backgroundColor: Colors.grey,
                     ),
                   ),
@@ -202,12 +202,17 @@ class _AccountState extends State<Account> {
                     data: userData['street'],
                     type: 'street',
                   ),
-                  Container(
+                   Container(
                       width: 230,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                           const LoginScreen()
+                           ));
+                        },
                         child: Text(
-                          'Edit Profile',
+                          'Logout',
                           style: bText,
                                     ),
                         style: firstButton,
@@ -332,6 +337,7 @@ class UserDataField extends StatelessWidget {
                     //       );
                     // },
                     child: Text('Edit')),
+                    
               ),
             ),
           ],
