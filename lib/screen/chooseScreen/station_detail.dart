@@ -1,5 +1,5 @@
-import 'package:busproject/screen/accountScreen/account_profile.dart';
-import 'package:busproject/screen/chooseScreen/get_comments.dart';
+import 'package:busproject/screen/commentsScreen/get_comments.dart';
+import 'package:busproject/screen/chooseScreen/get_station_info.dart';
 import 'package:busproject/screen/chooseScreen/new_buses.dart';
 import 'package:busproject/useless/dummies.dart';
 import 'package:busproject/useless/spd_test.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:busproject/Register/register_styles.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
-import 'package:draggable_fab/draggable_fab.dart';
 
 class StationDetails extends StatefulWidget {
   const StationDetails({
@@ -33,7 +32,7 @@ class _StationDetailsState extends State<StationDetails> {
     super.initState();
   }
 
-  getDetails(Map singleCityData, BuildContext context) {
+  getMapDetails(Map singleCityData, BuildContext context) {
     print(singleCityData);
     Navigator.push(
       context,
@@ -82,6 +81,7 @@ class _StationDetailsState extends State<StationDetails> {
                 }
 
                 final stationData = (snapshot.data!.docs);
+                
                 // for (var data in stationData) {
                 //  final stat = (data.data() as Map<String, dynamic>);
                 //  print(stat['name']);
@@ -90,10 +90,10 @@ class _StationDetailsState extends State<StationDetails> {
                 // for (var i = 0; i < snapshot.data!.docs.length; i++) {
                 //   print(snapshot.data!.docs[i]['name']);
                 // }
-
                 return Padding(
                   padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                   child: ListView.builder(
+                    
                     itemCount: stationData.length,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -171,7 +171,7 @@ class _StationDetailsState extends State<StationDetails> {
                                         icon: Icon(Icons.share_location,
                                             color: Colors.white),
                                         onPressedb: () {
-                                          getDetails(
+                                          getMapDetails(
                                               data.station[index], context);
                                           // showSheet();
                                         }),
@@ -179,7 +179,9 @@ class _StationDetailsState extends State<StationDetails> {
                                       icon: Icon(Icons.device_unknown,
                                           color: Colors.white),
                                       onPressedb: () {
-                                        myPupUp();
+                                        myPupUp(
+                                          stationData[index].id
+                                        );
 
                                         //     Navigator.of(context).push(MaterialPageRoute(
                                         // builder: (context) => const GetComments()));
@@ -196,15 +198,11 @@ class _StationDetailsState extends State<StationDetails> {
                   ),
                 );
               }),
-          // Positioned(top: 530 ,child: FloatingActionButton(onPressed: scanBarcodeNormal, child: Icon(Icons.code),),),
-          // Draggable(child: ),), feedback: FloatingActionButton(onPressed: scanBarcodeNormal, child: Icon(Icons.code),), childWhenDragging: Container(),),
-          DraggableFab(
-              child: FloatingActionButton(
-                  onPressed: scanBarcodeNormal, child: Icon(Icons.code)))
         ]));
   }
 
-  myPupUp() {
+  myPupUp(String documentID) {
+
     showDialog(
         context: context,
         builder: (context) {
@@ -220,22 +218,24 @@ class _StationDetailsState extends State<StationDetails> {
             )
           ),
           
-            content: Container(
+            content: SizedBox(
               height: 600,
               width: 350,
               child: DefaultTabController(
                   length: 2,
                   child: Scaffold(
                     appBar: AppBar(
+                      backgroundColor: busblackBlue,
+
                         bottom: TabBar(tabs: <Tab>[
-                      Tab(icon: Icon(Icons.arrow_forward)),
-                      Tab(icon: Icon(Icons.arrow_downward)),
+                      Tab(icon: Icon(Icons.directions_bus_outlined), text: 'Station info',),
+                      Tab(icon: Icon(Icons.message_outlined), text: 'Comments',),
                     ])),
                     body: Container(
                       child: TabBarView(
                         children: [
-                        Account(),
-                        GetComments()
+                          GetStationsInfo(documentID: documentID),
+                        GetComments(),
                       ]),
                     ),
                   )),

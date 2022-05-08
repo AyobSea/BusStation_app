@@ -246,17 +246,6 @@ class WaveClipper1 extends CustomClipper<Path> {
     return false;
   }
 }
-// class MyClipper extends CustomClipper<Rect> {
-//   @override
-//   Rect getClip(Size size) {
-//     return Rect.fromLTWH(10, 10, 200, 100);
-//   }
-
-//   @override
-//   bool shouldReclip(covariant CustomClipper<Rect> oldClipper) {
-//     return false;
-//   }
-// }
 
 class UserDataField extends StatelessWidget {
   const UserDataField({

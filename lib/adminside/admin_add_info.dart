@@ -1,9 +1,10 @@
 import 'package:busproject/Register/register_styles.dart';
-import 'package:busproject/screen/choose_station/station_detail.dart';
+import 'package:busproject/adminside/admin_home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart' as loc;
+import 'dart:math' as math;
 
 class AddInfo extends StatefulWidget {
   const AddInfo({Key? key}) : super(key: key);
@@ -22,6 +23,9 @@ class _AddInfoState extends State<AddInfo> {
   // LatLng? _latLong;
   bool _locating = false;
   // geocoding.Placemark? _placeMark;
+  
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +86,15 @@ class _AddInfoState extends State<AddInfo> {
                             onPressed: () async {
                               final loc.LocationData _locationResult = await location.getLocation();
                               await FirebaseFirestore.instance
-                                  .collection('station')
+                                  .collection('station').doc(_statID)
                         
-                                  .add(
+                                  .set(
                                     {
-                                      'name': _stationName, 'street': _stationStr, 'nearby': _statNearby,  'statID': _statID , 'latitude': _locationResult.latitude, 'longitude': _locationResult.longitude,
+                                      'name': _stationName, 'street': _stationStr, 'nearby': _statNearby , 'latitude': _locationResult.latitude, 'longitude': _locationResult.longitude,
                                     }
                                   );
                                   Navigator.of(context).push(MaterialPageRoute(
-                                                builder: (context) => StationDetails()));
+                                                builder: (context) => AdminHomePage()));
                         
                                   // .add({'name': _stationName, 'description': _stationDec});
                 

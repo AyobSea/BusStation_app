@@ -1,12 +1,11 @@
+import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:busproject/Register/register_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
 class NewBuses extends StatefulWidget {
   const NewBuses({Key? key}) : super(key: key);
@@ -23,7 +22,8 @@ class _NewBusesState extends State<NewBuses> {
   String selected = 'please select';
 
   String? from;
-  String? too;
+  String? to;
+  String? distance;
 
   TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
 
@@ -37,6 +37,26 @@ class _NewBusesState extends State<NewBuses> {
         _time = newTime;
       });
     }
+  }
+
+  double? lat1, lon1, lat2, lon2;
+
+  double getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(deg2rad(lat1)) *
+            math.cos(deg2rad(lat2)) *
+            math.sin(dLon / 2) *
+            math.sin(dLon / 2);
+    var c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d;
+  }
+
+  double deg2rad(deg) {
+    return deg * (math.pi / 180);
   }
 
   @override
@@ -56,10 +76,25 @@ class _NewBusesState extends State<NewBuses> {
             }
 
             List<String> dropdownValues = [];
+            Map<String, List<double>> locations = {};
 
             for (var docs in snapshot.data!.docs) {
-              dropdownValues.add((docs.data() as Map<String, dynamic>)['name']);
+              final fields = (docs.data() as Map<String, dynamic>);
+              dropdownValues.add(fields['name']);
+              locations[fields['name']] = [
+                fields['latitude'],
+                fields['longitude']
+              ];
             }
+
+            // double totalDistance = 0;
+            // for (var i = 0; i < dropdownValues.length - 1; i++) {
+            //   totalDistance += getDistanceFromLatLonInKm(
+            //       // stationLoc[i]["latitude"],
+            //       // stationLoc[i]["longitude"],
+            //       // stationLoc[i + 1]["latitude"],
+            //       // stationLoc[i + 1]["longitude"]);
+            // }
 
             return Center(
               child: Column(
@@ -95,7 +130,15 @@ class _NewBusesState extends State<NewBuses> {
                                       setState(() {
                                         from = newValue;
                                         stationsChanged =
-                                            Random().nextInt(11 - 1);
+                                            Random().nextInt(5) + 1;
+                                        if (from != null && to != null) {
+                                          distance = getDistanceFromLatLonInKm(
+                                                  locations[from]![0],
+                                                  locations[from]![1],
+                                                  locations[to]![0],
+                                                  locations[to]![1])
+                                              .toStringAsFixed(2);
+                                        }
                                       });
                                     },
                                   ),
@@ -117,16 +160,25 @@ class _NewBusesState extends State<NewBuses> {
                                   SelectStation(
                                       // selected: selected,
                                       dropdownValues: dropdownValues,
-                                      value: too,
+                                      value: to,
                                       onChanged: (newValue) {
                                         setState(() {
-                                          too = newValue;
+                                          to = newValue;
                                           stationsChanged =
-                                              Random().nextInt(6 - 1);
+                                              Random().nextInt(5) + 1;
+                                          if (from != null && to != null) {
+                                            distance =
+                                                getDistanceFromLatLonInKm(
+                                                        locations[from]![0],
+                                                        locations[from]![1],
+                                                        locations[to]![0],
+                                                        locations[to]![1])
+                                                    .toStringAsFixed(2);
+                                          }
                                         });
                                       }),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                           Container(
@@ -135,14 +187,12 @@ class _NewBusesState extends State<NewBuses> {
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color(0xffDFE0DF),
-                                    onPrimary: Colors.black,
-                                    side: BorderSide(width: 1, color: Colors.black)
-                                  ),
+                                      primary: Color(0xffDFE0DF),
+                                      onPrimary: Colors.black,
+                                      side: BorderSide(
+                                          width: 1, color: Colors.black)),
                                   onPressed: () {
-                                  
-                                      _selectTime();
-                                    
+                                    _selectTime();
                                   },
                                   child: Row(
                                     children: [
@@ -151,15 +201,14 @@ class _NewBusesState extends State<NewBuses> {
                                     ],
                                   ),
                                 ),
-
                                 Container(
-                                  
-                            width: 160,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              color: Color(0xffDFE0DF),
-                              border: Border.all(color: busblackBlue, width: 1),
-                            ),
+                                  width: 160,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffDFE0DF),
+                                    border: Border.all(
+                                        color: busblackBlue, width: 1),
+                                  ),
                                   child: Center(
                                     child: Text(
                                       _time.format(context),
@@ -168,7 +217,10 @@ class _NewBusesState extends State<NewBuses> {
                                 ),
                               ],
                             ),
-                          )
+                          ),
+                          Text(distance != null
+                              ? '$distance KM to readh distination'
+                              : '')
                         ],
                       ),
                     ),
@@ -191,16 +243,16 @@ class _NewBusesState extends State<NewBuses> {
                                         style: TextStyle(
                                             fontSize: 16, color: Colors.white)),
                                     SizedBox(width: 20),
-                                    Text(too ?? '',
+                                    Text(to ?? '',
                                         style: TextStyle(
                                             fontSize: 16, color: Colors.white)),
                                     SizedBox(width: 50),
                                     ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                    primary: Color(0xffDFE0DF),
-                                    onPrimary: Colors.black,
-                                    side: BorderSide(width: 1, color: Colors.black)
-                                  ),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Color(0xffDFE0DF),
+                                            onPrimary: Colors.black,
+                                            side: BorderSide(
+                                                width: 1, color: Colors.black)),
                                         onPressed: () {},
                                         child: Text('select this trip'))
                                   ],
@@ -214,7 +266,6 @@ class _NewBusesState extends State<NewBuses> {
           }),
     );
   }
-  
 }
 
 class SelectStation extends StatelessWidget {

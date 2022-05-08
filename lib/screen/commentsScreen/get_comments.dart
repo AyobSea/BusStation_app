@@ -1,5 +1,6 @@
 import 'package:busproject/Register/register_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class GetComments extends StatefulWidget {
@@ -32,30 +33,38 @@ class _GetCommentsState extends State<GetComments> {
                 //   print(snapshot.data!.docs[i]['name']);
                 // }
     
-                return ListView.builder(
-                    itemCount: commentsData.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Container(
-                          decoration: BoxDecoration(border: Border.all(width: 1, color: busIcon)),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                            
-                                child: getCommentsData(type: 'user name:', data: commentsData[index]['name'] , ),
+                return Padding(
+                  padding: EdgeInsets.all(5),
+                  child: ListView.builder(
+                      itemCount: commentsData.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                          child: DottedBorder(
+                            strokeWidth: 1,
+                                color: busIcon,
+                                dashPattern: [24, 5],
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                
+                                    child: getCommentsData(type: 'user name:', data: commentsData[index]['name'] , ),
+                                  ),
+                                                Padding(
+                                    padding: const EdgeInsets.all(10),
+                                
+                                    child: getCommentsData(type: 'comment:', data: commentsData[index]['description'], ),
+                                  ),
+                                ],
                               ),
-                                            Padding(
-                                padding: const EdgeInsets.all(10),
-                            
-                                child: getCommentsData(type: 'comment:', data: commentsData[index]['description'], ),
-                              ),
-                            ],
+                            ),
                           ),
+                        );
+                      }
                         ),
-                      );
-                    }
-                      );
+                );
                     }
                       ),
     );

@@ -56,7 +56,7 @@ class _SingleCityState extends State<SingleCity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('About ${widget.cityData['name']}')),
+      // appBar: AppBar(title: Text('About ${widget.cityData['name']}')),
       body: Column(
         children: [
          
