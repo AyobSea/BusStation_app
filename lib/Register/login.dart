@@ -1,4 +1,4 @@
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:busproject/adminside/admin_home.dart';
 import 'package:busproject/screen/chooseScreen/map.dart';
 import 'package:busproject/screen/home_screen.dart';
@@ -239,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
@@ -252,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
@@ -265,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.name,
                 star: false,
@@ -278,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.person, color: busclay),
                 type: TextInputType.emailAddress,
                 star: false,
@@ -291,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.lock, color: busclay),
                 type: TextInputType.name,
                 star: true,
@@ -304,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busbottom,
+                fill: busWhite,
                 icon: Icon(Icons.person, color: busclay),
                   onChanged: (String value) {
                     _street = value;
@@ -459,6 +459,7 @@ class LoginFields extends StatelessWidget {
             keyboardType: type,
             obscureText: star,
             decoration: InputDecoration(
+              errorText: 'wrong user name or password',
                prefixIcon: icon, 
               // focusColor: Colors.white,
               hintText: (' Enter $name '),

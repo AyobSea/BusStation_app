@@ -1,4 +1,4 @@
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';

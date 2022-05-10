@@ -8,6 +8,8 @@ final Color busIcon = Color(0xff608DF7);
 final Color busbottom = Color(0xff  );
 final Color test = Color(0xffA8AABC);
 final Color busExpand = Color(0xffD2A517);
+final Color busWhite = Color(0xffffffff);
+
 
 final firstButton = ElevatedButton.styleFrom(
   primary: Colors.white,

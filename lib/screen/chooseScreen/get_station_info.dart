@@ -1,4 +1,4 @@
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:busproject/screen/chooseScreen/station_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _GetStationsInfoState extends State<GetStationsInfo> {
 
           final stationDetailsData =
               (snapshot.data!.data() as Map<String, dynamic>);
-
+              
           return Padding(
             padding: EdgeInsets.all(5),
             child: DottedBorder(

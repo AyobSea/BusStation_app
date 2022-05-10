@@ -1,7 +1,11 @@
 import 'dart:ui';
 
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:busproject/screen/accountScreen/account_profile.dart';
+import 'package:busproject/screen/barcodeScreen/barcode.dart';
+import 'package:busproject/screen/chooseScreen/station_detail.dart';
+import 'package:busproject/screen/commentsScreen/comments.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +17,31 @@ class NewHome extends StatefulWidget {
 }
 
 class _NewHomeState extends State<NewHome> {
+
+    int side = 2;
+
+  
+
+  final List<Widget> screen = [
+    Account(),
+    Comments(),
+    NewHome(),
+    StationDetails(),
+    Barcode(),
+  ];
   @override
   Widget build(BuildContext context) {
+    
+    final pages = <Widget>[
+      const Icon(Icons.person, color: Colors.white,),
+      const Icon(Icons.comment, color: Colors.white,),
+      const Icon(Icons.home, color: Colors.white,),
+      const Icon(Icons.search, color: Colors.white,),
+      const Icon(Icons.camera_alt, color: Colors.white,),
+    ];
+
     return Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(items: pages),
       backgroundColor: busbottom,
       body: Center(
         child: Column(

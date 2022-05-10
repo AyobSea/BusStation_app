@@ -1,5 +1,5 @@
 import 'package:busproject/screen/accountScreen/account_profile.dart';
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:busproject/screen/barcodeScreen/barcode.dart';
 import 'package:busproject/screen/chooseScreen/station_detail.dart';
 import 'package:busproject/screen/new_home_screen.dart';
@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     StationDetails(),
     Barcode(),
   ];
+
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[

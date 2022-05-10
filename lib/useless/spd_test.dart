@@ -76,7 +76,3 @@ class _SingleCityState extends State<SingleCity> {
   }
 }
 
-
-
-
-

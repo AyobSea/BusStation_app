@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
 class StationDetails extends StatefulWidget {
@@ -169,7 +169,7 @@ class _StationDetailsState extends State<StationDetails> {
                                     ),
                                     iconButton(
                                         icon: Icon(Icons.share_location,
-                                            color: Colors.white),
+                                            color: Colors.red),
                                         onPressedb: () {
                                           getMapDetails(
                                               data.station[index], context);
@@ -187,6 +187,12 @@ class _StationDetailsState extends State<StationDetails> {
                                         // builder: (context) => const GetComments()));
                                       },
                                     ),
+                                    iconButton(
+                                        icon: Icon(Icons.share_location,
+                                            color: Colors.white),
+                                        onPressedb: () {
+                                          FirebaseFirestore.instance.collection('station').doc().delete();
+                                        }),
                                   ],
                                 ),
                               ),

@@ -1,5 +1,5 @@
 import 'package:busproject/Register/login.dart';
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -308,23 +308,6 @@ class UserDataField extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                     onPressed: () {},
-                    //     async {
-                    //   await FirebaseFirestore.instance
-                    //       .collection('users')
-                    //       .doc(user!.uid)
-                    //       .update({
-                    //     'name': _username,
-                    //     'first': _firstname,
-                    //     'last': _lastname,
-                    //     'street': _street,
-                    //     'role': false,
-                    //   });
-
-                    //   Navigator.of(context).push(MaterialPageRoute(
-                    //       builder: (context) => const UserChooseLocation()
-                    //       )
-                    //       );
-                    // },
                     child: Text('Edit')),
                     
               ),

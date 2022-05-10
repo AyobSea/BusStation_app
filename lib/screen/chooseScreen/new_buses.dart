@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:math';
 
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,16 +86,6 @@ class _NewBusesState extends State<NewBuses> {
                 fields['longitude']
               ];
             }
-
-            // double totalDistance = 0;
-            // for (var i = 0; i < dropdownValues.length - 1; i++) {
-            //   totalDistance += getDistanceFromLatLonInKm(
-            //       // stationLoc[i]["latitude"],
-            //       // stationLoc[i]["longitude"],
-            //       // stationLoc[i + 1]["latitude"],
-            //       // stationLoc[i + 1]["longitude"]);
-            // }
-
             return Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +93,6 @@ class _NewBusesState extends State<NewBuses> {
                     Expanded(
                       flex: 2,
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(height: 60),
                           Row(

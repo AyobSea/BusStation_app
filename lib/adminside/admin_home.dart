@@ -1,4 +1,4 @@
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:busproject/adminside/add_member.dart';
 import 'package:busproject/adminside/admin_add_location.dart';
 import 'package:busproject/adminside/admin_add_page.dart';

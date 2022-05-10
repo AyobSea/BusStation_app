@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:busproject/Register/register_styles.dart';
+import 'package:busproject/style/style.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:styled_text/styled_text.dart';
 
