@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> screen = [
     Account(),
     Comments(),
-    NewHome(),
     StationDetails(),
     Barcode(),
   ];
@@ -31,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final pages = <Widget>[
       const Icon(Icons.person, color: Colors.white,),
       const Icon(Icons.comment, color: Colors.white,),
-      const Icon(Icons.home, color: Colors.white,),
       const Icon(Icons.search, color: Colors.white,),
       const Icon(Icons.camera_alt, color: Colors.white,),
     ];

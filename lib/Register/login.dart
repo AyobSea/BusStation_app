@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
-
 class LoginScreen extends StatefulWidget {
   static var id;
 
@@ -20,6 +19,26 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late String _username, _firstname, _lastname, _email, _password, _street;
   final _auth = FirebaseAuth.instance;
+
+  
+   static String showError(String errorCode) {
+     switch (errorCode) {
+       case 'ERROR_EMAIL_ALREADY_IN_USE':
+         return "This e-mail address is already in use, please use a different e-mail address.";
+
+       case 'ERROR_INVALID_EMAIL':
+         return "The email address is badly formatted.";
+
+       case 'ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL':
+         return "The e-mail address in your Facebook account has been registered in the system before. Please login by trying other methods with this e-mail address.";
+
+       case 'ERROR_WRONG_PASSWORD':
+         return "E-mail address or password is incorrect.";
+
+       default:
+         return "An error has occurred";
+     }
+   }
 
   static const id = 'Login_page';
 
@@ -54,17 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       const SizedBox(height: 90),
-                      
+
                       Row(
                         children: [
-                      //     Container(
-                        
-                      //   decoration: BoxDecoration(
-                      //       shape: BoxShape.circle,
-                      //       color: busyellow
-                      //     ),
-                      //     child: Text('cfg'),
-                      // ),
+                          //     Container(
+
+                          //   decoration: BoxDecoration(
+                          //       shape: BoxShape.circle,
+                          //       color: busyellow
+                          //     ),
+                          //     child: Text('cfg'),
+                          // ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
@@ -72,10 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text(
                                 'LOGIN',
                                 style: TextStyle(
-                                  fontSize: 44,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                                ),
+                                    fontSize: 44,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -84,7 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       // const SizedBox(height: 30),
                       LoginFields(
-                        icon: Icon(Icons.person, color: Colors.white,),
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
                         type: TextInputType.emailAddress,
                         star: false,
                         onChanged: (String value) {
@@ -107,22 +128,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           ElevatedButton(
                             style: secondButton,
-                            child: Text(
-                              'LOGIN',
-                              style:
-                                  bText
-                            ),
+                            child: Text('LOGIN', style: bText),
                             onPressed: () {
-                              _auth
-                                  .signInWithEmailAndPassword(
-                                      email: _email, password: _password)
-                                  .then(
-                                (_) {
-                                  checkRole();
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => const Map()));
-                                },
-                              );
+                              try {
+                                _auth
+                                    .signInWithEmailAndPassword(
+                                        email: _email, password: _password)
+                                    .then(
+                                  (_) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserChooseLocation()));
+                                  },
+                                );
+                              } catch (e) {
+                                print(showError);
+                              }
                             },
                           ),
                           const SizedBox(height: 10),
@@ -133,24 +155,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 10),
                           ElevatedButton(
                               style: firstButton,
-                              child: Text(
-                                'Regester',
-                                style:
-                                    bText
-                              ),
+                              child: Text('Regester', style: bText),
                               onPressed: () {
                                 showSheet();
                                 // Navigator.pushNamed(context, Register.id);
                               }),
                           const SizedBox(height: 20),
-                          TextButton(
-                              onPressed: () {
-                                showSheet();
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ManagePage()));
-                              },
-                              child:
-                                  const Text('do u have an account ? Register'))
+                          // TextButton(
+                          //     onPressed: () {
+                          //       showSheet();
+                          //       // Navigator.of(context).push(MaterialPageRoute(
+                          //       //     builder: (context) => ManagePage()));
+                          //     },
+                          //     child:
+                          //         const Text('do u have an account ? Register'))
                         ],
                       ),
                     ],
@@ -170,18 +188,16 @@ class _LoginScreenState extends State<LoginScreen> {
         .doc(_auth.currentUser!.uid)
         .get()
         .then((value) => value.data()!['role']);
-
     if (isAdmin) {
       return Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) =>  AdminHomePage()));
+          .push(MaterialPageRoute(builder: (context) => AdminHomePage()));
     } else {
       return Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 
-  Future showSheet() => showSlidingBottomSheet(
-    context,
+  Future showSheet() => showSlidingBottomSheet(context,
       builder: (context) => SlidingSheetDialog(
           snapSpec: const SnapSpec(
             // initialSnap: 1,
@@ -216,10 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           },
-          builder: buildSheet
-          )
-          );
-         Widget buildSheet(context, state) => Material(
+          builder: buildSheet));
+  Widget buildSheet(context, state) => Material(
           child: Container(
         color: busclay,
         child: Column(
@@ -230,9 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                 'Register',
                 style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: busIcon),
+                    fontSize: 14, fontWeight: FontWeight.bold, color: busIcon),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -304,8 +316,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
-                fill: busWhite,
-                icon: Icon(Icons.person, color: busclay),
+                  fill: busWhite,
+                  icon: Icon(Icons.person, color: busclay),
                   onChanged: (String value) {
                     _street = value;
                   },
@@ -343,9 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
 
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const UserChooseLocation()
-                          )
-                          );
+                          builder: (context) => const UserChooseLocation()));
                     },
                   );
                 },
@@ -365,15 +375,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
                   );
                 },
               ),
             ),
           ],
         ),
-      )
-      );
+      ));
 }
 
 class Fields extends StatelessWidget {
@@ -382,8 +392,9 @@ class Fields extends StatelessWidget {
       required this.onChanged,
       required this.name,
       required this.type,
-      required this.star, 
-      required this.icon, required this.fill})
+      required this.star,
+      required this.icon,
+      required this.fill})
       : super(key: key);
 
   final Function(String) onChanged;
@@ -406,18 +417,16 @@ class Fields extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             fillColor: fill,
-             prefixIcon: icon, 
+            prefixIcon: icon,
             // focusColor: Colors.white,
             hintText: (' Enter $name '),
-            hintStyle:  TextStyle(
-                color: busclay,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-            enabledBorder:  OutlineInputBorder(
+            hintStyle: TextStyle(
+                color: busclay, fontSize: 16, fontWeight: FontWeight.bold),
+            enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(color: busclay),
             ),
-            focusedBorder:  OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(color: busclay),
             ),
@@ -429,14 +438,13 @@ class Fields extends StatelessWidget {
   }
 }
 
-
 class LoginFields extends StatelessWidget {
   LoginFields(
       {Key? key,
       required this.onChanged,
       required this.name,
       required this.type,
-      required this.star, 
+      required this.star,
       required this.icon})
       : super(key: key);
 
@@ -445,6 +453,7 @@ class LoginFields extends StatelessWidget {
   final TextInputType type;
   final bool star;
   final Icon icon;
+  // final GlobalKey<FormState> _key = GlobalKey(FormState)();
 
   @override
   Widget build(BuildContext context) {
@@ -454,29 +463,33 @@ class LoginFields extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: ConstrainedBox(
           constraints: const BoxConstraints.tightFor(width: 300),
-          child: TextField(
-            style: TextStyle(color: Colors.white),
-            keyboardType: type,
-            obscureText: star,
-            decoration: InputDecoration(
-              errorText: 'wrong user name or password',
-               prefixIcon: icon, 
-              // focusColor: Colors.white,
-              hintText: (' Enter $name '),
-              hintStyle:  TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-              enabledBorder:  OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                borderSide: BorderSide(color: Colors.white),
+          child: Form(
+            child: TextFormField(
+              validator: (value) {},
+              style: TextStyle(color: Colors.white),
+              keyboardType: type,
+              obscureText: star,
+              decoration: InputDecoration(
+                // errorText: 'wrong user name or password',
+          
+                prefixIcon: icon,
+                // focusColor: Colors.white,
+                hintText: (' Enter $name '),
+                hintStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
-              focusedBorder:  OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                borderSide: BorderSide(color: Colors.white),
-              ),
+              onChanged: onChanged,
             ),
-            onChanged: onChanged,
           ),
         ),
       ),

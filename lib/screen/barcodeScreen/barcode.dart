@@ -130,7 +130,7 @@ class _BarcodeState extends State<Barcode> {
   }
 
   Future<void> _onOpen(LinkableElement link) async {
-    final url = 'Scan result : $_scanBarcode\n';
+    final url = 'please copy this link in your browser : $_scanBarcode\n';
 
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);

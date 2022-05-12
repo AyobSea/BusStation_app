@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:math';
 
+import 'package:busproject/screen/home_screen.dart';
 import 'package:busproject/style/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,7 +63,7 @@ class _NewBusesState extends State<NewBuses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: busbottom,
+      backgroundColor: busBackground,
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('station').snapshots(),
           builder:
@@ -242,8 +243,13 @@ class _NewBusesState extends State<NewBuses> {
                                             onPrimary: Colors.black,
                                             side: BorderSide(
                                                 width: 1, color: Colors.black)),
-                                        onPressed: () {},
-                                        child: Text('select this trip'))
+                                        onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                        },
+                                        child: Text('set a reminder'))
                                   ],
                                 ),
                               );

@@ -116,27 +116,32 @@ class _CommentsState extends State<Comments> {
                     maxLength: 520,
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      await FirebaseFirestore.instance
-                          .collection('comments')
-                          .add({
-                        'name': _username,
-                        'description': _description,
-                      });
-                      setState(() {
-                        nameController.clear();
-                      });
-                      setState(() {
-                        commController.clear();
-                      });
-
-                      // .add({'name': _stationName, 'description': _stationDec});
-
-                      //  Navigator.of(context).push(MaterialPageRoute(
-                      //               builder: (context) => StationDetails()));
-                    },
-                    child: Text('press'))
+                SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: firstButton,
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('comments')
+                            .add({
+                          'name': _username,
+                          'description': _description,
+                        });
+                        setState(() {
+                          nameController.clear();
+                        });
+                        setState(() {
+                          commController.clear();
+                        });
+                
+                        // .add({'name': _stationName, 'description': _stationDec});
+                
+                        //  Navigator.of(context).push(MaterialPageRoute(
+                        //               builder: (context) => StationDetails()));
+                      },
+                      child: Text('Submit', style: bText,)),
+                )
               ],
             ),
           ),

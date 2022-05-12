@@ -169,7 +169,7 @@ class _StationDetailsState extends State<StationDetails> {
                                     ),
                                     iconButton(
                                         icon: Icon(Icons.share_location,
-                                            color: Colors.red),
+                                            color: Colors.white),
                                         onPressedb: () {
                                           getMapDetails(
                                               data.station[index], context);
@@ -187,12 +187,6 @@ class _StationDetailsState extends State<StationDetails> {
                                         // builder: (context) => const GetComments()));
                                       },
                                     ),
-                                    iconButton(
-                                        icon: Icon(Icons.share_location,
-                                            color: Colors.white),
-                                        onPressedb: () {
-                                          FirebaseFirestore.instance.collection('station').doc().delete();
-                                        }),
                                   ],
                                 ),
                               ),

@@ -50,12 +50,8 @@ class BusStation extends StatelessWidget {
 
         
       },
-      title: 'Login App',
-      home:  Scaffold(
 
-        body: LoginScreen()
-        
-         ),
+      home:  LoginScreen()
     );
   }
 }
