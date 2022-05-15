@@ -136,10 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         email: _email, password: _password)
                                     .then(
                                   (_) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UserChooseLocation()));
+                                    checkRole();
                                   },
                                 );
                               } catch (e) {
@@ -161,14 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // Navigator.pushNamed(context, Register.id);
                               }),
                           const SizedBox(height: 20),
-                          // TextButton(
-                          //     onPressed: () {
-                          //       showSheet();
-                          //       // Navigator.of(context).push(MaterialPageRoute(
-                          //       //     builder: (context) => ManagePage()));
-                          //     },
-                          //     child:
-                          //         const Text('do u have an account ? Register'))
                         ],
                       ),
                     ],
@@ -193,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .push(MaterialPageRoute(builder: (context) => AdminHomePage()));
     } else {
       return Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+          .push(MaterialPageRoute(builder: (context) => UserChooseLocation()));
     }
   }
 

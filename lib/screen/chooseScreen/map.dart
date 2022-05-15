@@ -38,7 +38,7 @@ class _UserChooseLocationState extends State<UserChooseLocation> {
   geocoding.Placemark? _placeMark;
 
   static const CameraPosition appStartLocation = CameraPosition(
-    target: LatLng(35.6762, 139.6503),
+    target: LatLng(21.2521, 39.4934),
     zoom: 11,
   );
 
