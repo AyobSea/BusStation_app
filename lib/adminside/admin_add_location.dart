@@ -207,7 +207,7 @@ class _AdminAddLocationState extends State<AdminAddLocation> {
                                   ),
                                   
                                   child: Text(
-                                    'MY Location',
+                                    'Select this location for a new station',
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.white),
                                   ),

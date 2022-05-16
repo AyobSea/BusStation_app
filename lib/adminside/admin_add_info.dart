@@ -30,14 +30,14 @@ class _AddInfoState extends State<AddInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: busyellow,
+      backgroundColor: busBackground,
       body: 
       Column(
         children: [
           Expanded(
             flex: 2,
             child: Container(
-              color: busyellow,
+              color: busBackground,
 
       )),
           // infoField(hintName: 'name', hintDecs: 'description'),
@@ -83,6 +83,7 @@ class _AddInfoState extends State<AddInfo> {
                       ),
                     SizedBox(height: 20),
                       ElevatedButton(
+                        style: firstButton,
                             onPressed: () async {
                               final loc.LocationData _locationResult = await location.getLocation();
                               await FirebaseFirestore.instance
@@ -101,7 +102,7 @@ class _AddInfoState extends State<AddInfo> {
                                   //  Navigator.of(context).push(MaterialPageRoute(
                                   //               builder: (context) => StationDetails()));
                             },
-                            child: Text('press'))
+                            child: Text('Add new station', style: bText,))
                   ],
                 ),
               ),

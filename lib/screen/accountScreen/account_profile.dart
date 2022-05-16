@@ -77,29 +77,6 @@ class _AccountState extends State<Account> {
       print('Failed to pick image: $e');
     }
   }
-
-  //       Reference ref =
-  //         firebaseStorage.ref(_auth?.uid).child("dp");
-  //       ref.putFile(image).whenComplete(() {
-  //       print("Pic Uploaded Successfully!");
-  //       setState(() {
-  //         _uploading = false;
-  //       });
-  //       // refreshing the UI when photo updated
-  //       getUploadedPic();
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  // final imageName = '${DateTime.now().millisecondsSinceEpoch}.png';
-  // final firebaseStorageRef = FirebaseStorage.instance
-  //       .ref()
-  //       .child('images/$imageName');
-
-  // final uploadTask = firebaseStorageRef.putFile(file);
-  // final taskSnapshot = await uploadTask.onComplete;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -273,7 +250,7 @@ class UserDataField extends StatelessWidget {
               textAlign: TextAlign.left,
               tags: {
                 'bold': StyledTextTag(
-                    style: TextStyle(fontWeight: FontWeight.normal)),
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 'size': StyledTextTag(style: TextStyle(fontSize: 18)),
                 'colorwhite':
                     StyledTextTag(style: TextStyle(color: Colors.grey)),
@@ -293,23 +270,12 @@ class UserDataField extends StatelessWidget {
                   textAlign: TextAlign.right,
                   tags: {
                     'bold': StyledTextTag(
-                        style: TextStyle(fontWeight: FontWeight.normal)),
-                    'size': StyledTextTag(style: TextStyle(fontSize: 16)),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    'size': StyledTextTag(style: TextStyle(fontSize: 24)),
                     'colorgrey':
                         StyledTextTag(style: TextStyle(color: Colors.black)),
                   },
                 ),
-              ),
-            ),
-            Spacer(),
-            Padding(
-              padding: EdgeInsets.only(right: 30),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                    onPressed: () {},
-                    child: Text('Edit')),
-                    
               ),
             ),
           ],

@@ -181,9 +181,24 @@ class _LoginScreenState extends State<LoginScreen> {
       return Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AdminHomePage()));
     } else {
+      
+      final isOld = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .get()
+        .then((value) => value.data()!.containsKey('latitude'));
+
+      if  (isOld != null && isOld) {
+        
+      return Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
+        
       return Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => UserChooseLocation()));
-    }
+      }
+
+    } 
   }
 
   Future showSheet() => showSlidingBottomSheet(context,

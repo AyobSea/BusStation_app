@@ -25,24 +25,24 @@ class _AdminHomePageState extends State<AdminHomePage> {
   final List<Widget> screen = [
     Account(),
     StationDetails(),
-    NavigatorToLocation(),
+    AdminAddStationandMember()
   ];
    int side = 2;
   @override
   Widget build(BuildContext context) {
      final pages = <Widget>[
-       Icon(Icons.person, color: busclay),
-       Icon(Icons.directions_bus, color: busclay),
-       Icon(Icons.work_outline_outlined, color: busclay),
+       Icon(Icons.person, color: busWhite),
+       Icon(Icons.directions_bus, color: busWhite),
+       Icon(Icons.work_outline_outlined, color: busWhite),
     ];
     return Scaffold(
-      backgroundColor: busclay,
       extendBody: true,
       body: screen[side],
       bottomNavigationBar: CurvedNavigationBar(
+        
         height: 70,
         backgroundColor: Colors.transparent,
-        color: busBackground,
+        color: busclay,
         index: side,
         items: pages,
         onTap: (index) {
@@ -55,3 +55,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
   }
 
   }
+
+class AdminAddPage {
+}
