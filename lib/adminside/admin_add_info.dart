@@ -17,10 +17,6 @@ class _AddInfoState extends State<AddInfo> {
   final _auth = FirebaseAuth.instance;
   late String _stationName, _stationStr, _statNearby, _statID;
   final loc.Location location = loc.Location();
-  // StreamSubscription<loc.LocationData>? _locationSubscription;
-  // Completer<GoogleMapController> _controller = Completer();
-  // LocationData? _currentPosition;
-  // LatLng? _latLong;
   bool _locating = false;
   // geocoding.Placemark? _placeMark;
   
@@ -87,11 +83,11 @@ class _AddInfoState extends State<AddInfo> {
                             onPressed: () async {
                               final loc.LocationData _locationResult = await location.getLocation();
                               await FirebaseFirestore.instance
-                                  .collection('station').doc(_statID)
+                                  .collection('station').doc()
                         
                                   .set(
                                     {
-                                      'name': _stationName, 'street': _stationStr, 'nearby': _statNearby , 'latitude': _locationResult.latitude, 'longitude': _locationResult.longitude,
+                                      'name': _stationName, 'street': _stationStr, 'nearby': _statNearby , 'latitude': _locationResult.latitude, 'longitude': _locationResult.longitude, 'statID': _statID
                                     }
                                   );
                                   Navigator.of(context).push(MaterialPageRoute(

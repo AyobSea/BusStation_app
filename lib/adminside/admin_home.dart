@@ -1,3 +1,4 @@
+import 'package:busproject/adminside/add_trip.dart';
 import 'package:busproject/style/style.dart';
 import 'package:busproject/adminside/add_member.dart';
 import 'package:busproject/adminside/admin_add_location.dart';
@@ -19,22 +20,23 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-  late String _username, _firstname, _lastname, _email, _password, _street;
   final _auth = FirebaseAuth.instance;
 
   final List<Widget> screen = [
     Account(),
     StationDetails(),
-    AdminAddStationandMember()
-  ];
-   int side = 2;
-  @override
-  Widget build(BuildContext context) {
-     final pages = <Widget>[
+    AdminAddStationandMember(),
+  ];    
+  
+   final pages = <Widget>[
        Icon(Icons.person, color: busWhite),
        Icon(Icons.directions_bus, color: busWhite),
        Icon(Icons.work_outline_outlined, color: busWhite),
     ];
+   int side = 1;
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       extendBody: true,
       body: screen[side],

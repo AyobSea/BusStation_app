@@ -5,6 +5,7 @@ import 'package:busproject/screen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,26 +20,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late String _username, _firstname, _lastname, _email, _password, _street;
   final _auth = FirebaseAuth.instance;
-
-  
-   static String showError(String errorCode) {
-     switch (errorCode) {
-       case 'ERROR_EMAIL_ALREADY_IN_USE':
-         return "This e-mail address is already in use, please use a different e-mail address.";
-
-       case 'ERROR_INVALID_EMAIL':
-         return "The email address is badly formatted.";
-
-       case 'ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL':
-         return "The e-mail address in your Facebook account has been registered in the system before. Please login by trying other methods with this e-mail address.";
-
-       case 'ERROR_WRONG_PASSWORD':
-         return "E-mail address or password is incorrect.";
-
-       default:
-         return "An error has occurred";
-     }
-   }
 
   static const id = 'Login_page';
 
@@ -76,14 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       Row(
                         children: [
-                          //     Container(
-
-                          //   decoration: BoxDecoration(
-                          //       shape: BoxShape.circle,
-                          //       color: busyellow
-                          //     ),
-                          //     child: Text('cfg'),
-                          // ),
+                        
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
@@ -103,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // const SizedBox(height: 30),
                       LoginFields(
                         icon: Icon(
-                          Icons.person,
+                          Icons.mail,
                           color: Colors.white,
                         ),
                         type: TextInputType.emailAddress,
@@ -139,8 +113,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     checkRole();
                                   },
                                 );
-                              } catch (e) {
-                                print(showError);
+                              } on FirebaseAuthException catch (e) {
+                                Fluttertoast.showToast(
+                                    msg: e.message ?? 'failed',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                               }
                             },
                           ),
@@ -181,24 +162,20 @@ class _LoginScreenState extends State<LoginScreen> {
       return Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AdminHomePage()));
     } else {
-      
       final isOld = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(_auth.currentUser!.uid)
-        .get()
-        .then((value) => value.data()!.containsKey('latitude'));
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get()
+          .then((value) => value.data()!.containsKey('latitude'));
 
-      if  (isOld != null && isOld) {
-        
-      return Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      if (isOld != null && isOld) {
+        return Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
-        
-      return Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => UserChooseLocation()));
+        return Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => UserChooseLocation()));
       }
-
-    } 
+    }
   }
 
   Future showSheet() => showSlidingBottomSheet(context,
@@ -239,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: buildSheet));
   Widget buildSheet(context, state) => Material(
           child: Container(
-        color: busclay,
+        color: busBackground,
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -295,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
                 fill: busWhite,
-                icon: Icon(Icons.person, color: busclay),
+                icon: Icon(Icons.mail, color: busclay),
                 type: TextInputType.emailAddress,
                 star: false,
                 onChanged: (String value) {
@@ -321,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.only(left: 32, right: 26),
               child: Fields(
                   fill: busWhite,
-                  icon: Icon(Icons.person, color: busclay),
+                  icon: Icon(Icons.home, color: busclay),
                   onChanged: (String value) {
                     _street = value;
                   },
@@ -475,7 +452,7 @@ class LoginFields extends StatelessWidget {
               obscureText: star,
               decoration: InputDecoration(
                 // errorText: 'wrong user name or password',
-          
+
                 prefixIcon: icon,
                 // focusColor: Colors.white,
                 hintText: (' Enter $name '),

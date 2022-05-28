@@ -59,7 +59,7 @@ class _CommentsState extends State<Comments> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        'white': StyledTextTag(
+                        'black': StyledTextTag(
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: busblackBlue)),
@@ -99,7 +99,8 @@ class _CommentsState extends State<Comments> {
                       _username = value;
                     },
                   ),
-                ),Padding(
+                ),
+                Padding(
                   padding: EdgeInsets.all(15),
                   child: TextFormField(
                     decoration: InputDecoration(

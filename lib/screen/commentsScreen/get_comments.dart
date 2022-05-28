@@ -50,7 +50,7 @@ class _GetCommentsState extends State<GetComments> {
                                   Padding(
                                     padding: const EdgeInsets.all(10),
                                 
-                                    child: getCommentsData(type: 'user name:', data: commentsData[index]['name'] , ),
+                                    child: getCommentsData(type: 'user name: ', data: commentsData[index]['name'] , ),
                                   ),
                                                 Padding(
                                     padding: const EdgeInsets.all(10),

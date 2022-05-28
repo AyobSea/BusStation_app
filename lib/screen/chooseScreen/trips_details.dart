@@ -4,19 +4,23 @@ import 'dart:math';
 
 import 'package:busproject/screen/home_screen.dart';
 import 'package:busproject/style/style.dart';
+import 'package:busproject/useless/buses.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class NewBuses extends StatefulWidget {
-  const NewBuses({Key? key}) : super(key: key);
+class tripsDetails extends StatefulWidget {
+  const tripsDetails({Key? key}) : super(key: key);
 
   @override
-  State<NewBuses> createState() => _NewBusesState();
+  State<tripsDetails> createState() => _tripsDetailsState();
 }
 
-class _NewBusesState extends State<NewBuses> {
+class _tripsDetailsState extends State<tripsDetails> {
   final _auth = FirebaseAuth.instance.currentUser;
+
+  final List <Widget>tripCards = [];
 
   int stationsChanged = 0;
 
@@ -116,20 +120,19 @@ class _NewBusesState extends State<NewBuses> {
                                     // selected: selected,
                                     dropdownValues: dropdownValues,
                                     value: from,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        from = newValue;
-                                        stationsChanged =
-                                            Random().nextInt(5) + 1;
-                                        if (from != null && to != null) {
-                                          distance = getDistanceFromLatLonInKm(
-                                                  locations[from]![0],
-                                                  locations[from]![1],
-                                                  locations[to]![0],
-                                                  locations[to]![1])
-                                              .toStringAsFixed(2);
-                                        }
-                                      });
+                                    onChanged: (newValue) async {
+                                      from = newValue;
+                                      stationsChanged = Random().nextInt(5) + 1;
+                                      if (from != null && to != null) {
+                                        distance = getDistanceFromLatLonInKm(
+                                                locations[from]![0],
+                                                locations[from]![1],
+                                                locations[to]![0],
+                                                locations[to]![1])
+                                            .toStringAsFixed(2);
+                                      }
+                                      await getTrips();
+                                      setState(() {});
                                     },
                                   ),
                                 ],
@@ -151,8 +154,7 @@ class _NewBusesState extends State<NewBuses> {
                                       // selected: selected,
                                       dropdownValues: dropdownValues,
                                       value: to,
-                                      onChanged: (newValue) {
-                                        setState(() {
+                                      onChanged: (newValue) async {
                                           to = newValue;
                                           stationsChanged =
                                               Random().nextInt(5) + 1;
@@ -165,6 +167,9 @@ class _NewBusesState extends State<NewBuses> {
                                                         locations[to]![1])
                                                     .toStringAsFixed(2);
                                           }
+                                          await getTrips();
+                                        setState(() {
+                                          
                                         });
                                       }),
                                 ],
@@ -221,45 +226,56 @@ class _NewBusesState extends State<NewBuses> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(40),
                                 topRight: Radius.circular(40)),
-                            color: busclay),
-                        child: ListView.builder(
-                            itemCount: 1 + stationsChanged,
-                            itemBuilder: (context, index) {
-                              return Center(
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20),
-                                    Text(from ?? '',
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white)),
-                                    SizedBox(width: 20),
-                                    Text(to ?? '',
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white)),
-                                    SizedBox(width: 50),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Color(0xffDFE0DF),
-                                            onPrimary: Colors.black,
-                                            side: BorderSide(
-                                                width: 1, color: Colors.black)),
-                                        onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeScreen()));
-                                        },
-                                        child: Text('set a reminder'))
-                                  ],
-                                ),
-                              );
-                            }),
+                            color: test),
+                            child: tripCards.isNotEmpty? ListView.builder(itemBuilder: (context, index) => tripCards[index], itemCount: tripCards.length): Center(child: Text('No Trips Availble', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),)),
+                        
                       ),
                     )
                   ]),
             );
           }),
     );
+  }
+
+  Future<void> getTrips() async {
+    final selectedTrip = await FirebaseFirestore.instance
+        .collection('Trips')
+        .where('StartingTrip', isEqualTo: from).where('EndingTrip', isEqualTo: to)
+        .get();
+        tripCards.clear();
+    for (var trips in selectedTrip.docs) {
+      tripCards.add(
+        Center(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: 480,
+              width: 380,
+              child: Card(
+                child: DottedBorder(
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Text(
+                          trips.data()['StartingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 20,),
+                        Text(
+                          trips.data()['EndingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(' ExpectedTime : '),
+                        Text(
+                          trips.data()['ExpectedTime'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ),
+            ),
+          ),
+        )
+      );
+    }
   }
 }
 
@@ -311,6 +327,39 @@ class SelectStation extends StatelessWidget {
           onChanged: onChanged,
         ),
       ),
+    );
+  }
+}
+
+class getTripsData extends StatelessWidget {
+  const getTripsData({
+    Key? key,
+    required this.data,
+    required this.type,
+  }) : super(key: key);
+
+  final String data;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          type,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          data,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -114,7 +115,7 @@ class _AccountState extends State<Account> {
                           child: CircleAvatar(
                             radius: 80,
                             backgroundColor: Colors.white70,
-                            child: Icon(Icons.camera),
+                            child: Icon(Icons.person, size: 80),
                           ),
                         ),
                       ]),
@@ -150,8 +151,8 @@ class _AccountState extends State<Account> {
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(5),
-                          primary: Colors.red, // <-- Button color
-                          onPrimary: Colors.black, // <-- Splash color
+                          primary: busblackBlue,
+                          onPrimary: Colors.black, 
                         ),
                       ),
                     ),
@@ -189,10 +190,9 @@ class _AccountState extends State<Account> {
                            ));
                         },
                         child: Text(
-                          'Logout',
-                          style: bText,
+                          'Logout', style: bText,
                                     ),
-                        style: firstButton,
+                        style: firstButton, 
                       )),
                 ],
               ),
@@ -242,43 +242,23 @@ class UserDataField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12.0),
+          padding: const EdgeInsets.only(left: 8.0),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: StyledText(
-              text: '<colorwhite><bold><size>$type</size></bold></colorwhite>',
-              textAlign: TextAlign.left,
-              tags: {
-                'bold': StyledTextTag(
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                'size': StyledTextTag(style: TextStyle(fontSize: 18)),
-                'colorwhite':
-                    StyledTextTag(style: TextStyle(color: Colors.grey)),
-              },
-            ),
+            child: Text(type, style: GoogleFonts.alef(
+              fontSize: 18,
+              color: test
+            )),
           ),
         ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: StyledText(
-                  text:
-                      '<colorgrey><bold><size>$data</size></bold></colorgrey>',
-                  textAlign: TextAlign.right,
-                  tags: {
-                    'bold': StyledTextTag(
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    'size': StyledTextTag(style: TextStyle(fontSize: 24)),
-                    'colorgrey':
-                        StyledTextTag(style: TextStyle(color: Colors.black)),
-                  },
-                ),
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(data, style: GoogleFonts.alef(
+              fontSize: 20
+            )),
+          ),
         ),
       ],
     ));

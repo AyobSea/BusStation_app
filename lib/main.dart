@@ -1,7 +1,7 @@
 import 'package:busproject/Register/login.dart';
 import 'package:busproject/Register/register.dart';
 import 'package:busproject/adminside/admin_add_location.dart';
-import 'package:busproject/screen/buses.dart';
+import 'package:busproject/useless/buses.dart';
 import 'package:busproject/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

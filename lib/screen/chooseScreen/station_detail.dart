@@ -1,6 +1,7 @@
+import 'package:busproject/adminside/add_trip.dart';
 import 'package:busproject/screen/commentsScreen/get_comments.dart';
 import 'package:busproject/screen/chooseScreen/get_station_info.dart';
-import 'package:busproject/screen/chooseScreen/new_buses.dart';
+import 'package:busproject/screen/chooseScreen/trips_details.dart';
 import 'package:busproject/useless/dummies.dart';
 import 'package:busproject/useless/spd_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:busproject/style/style.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
+
+
+
+
 
 class StationDetails extends StatefulWidget {
   const StationDetails({
@@ -21,7 +26,7 @@ class StationDetails extends StatefulWidget {
 }
 
 class _StationDetailsState extends State<StationDetails> {
-  final _auth = FirebaseAuth.instance.currentUser;
+  final _auth = FirebaseAuth.instance;
   // Position? _currentUserPosition;
   double? distanceImMeter = 0.0;
   Data data = Data();
@@ -54,10 +59,6 @@ class _StationDetailsState extends State<StationDetails> {
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
@@ -65,11 +66,52 @@ class _StationDetailsState extends State<StationDetails> {
     });
   }
 
+  bool isAdmin = false;
+
+  Future<void> getRole() {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        isAdmin = snapshot.data()!['role'];
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
+
+  // bool isHeAdmin() async {
+
+  //   final isAdmin = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(_auth.currentUser!.uid)
+  //       .get()
+  //       .then((value) => value.data()!['role']);
+  //   if (isAdmin) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  bool isHeAdmin() {
+    isAdmin = true;
+
+    if (isAdmin ==
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(_auth.currentUser!.uid)
+            .get()
+            .then((value) => value.data()!['role'])) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // floatingActionButton: FloatingActionButton(onPressed: scanBarcodeNormal, child: Icon(Icons.code),),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         backgroundColor: busBackground,
         body: Stack(children: [
           StreamBuilder(
@@ -81,19 +123,10 @@ class _StationDetailsState extends State<StationDetails> {
                 }
 
                 final stationData = (snapshot.data!.docs);
-                
-                // for (var data in stationData) {
-                //  final stat = (data.data() as Map<String, dynamic>);
-                //  print(stat['name']);
-                // }
 
-                // for (var i = 0; i < snapshot.data!.docs.length; i++) {
-                //   print(snapshot.data!.docs[i]['name']);
-                // }
                 return Padding(
                   padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                   child: ListView.builder(
-                    
                     itemCount: stationData.length,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -113,40 +146,38 @@ class _StationDetailsState extends State<StationDetails> {
                               Stack(
                                 children: [
                                   Container(
-                                    // height: 380,
-                                    // width: 420,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(width: 2))),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(16),
-                                        topLeft: Radius.circular(16),
-                                      ),
-                                      child: Image.asset(
-                                          'images/Bus-Stop-scaled.jpg'),
+                                  // height: 380,
+                                  // width: 420,
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border(bottom: BorderSide(width: 2))),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(16),
+                                      topLeft: Radius.circular(16),
                                     ),
+                                    child: Image.asset(
+                                        'images/Bus-Stop-scaled.jpg'),
                                   ),
+                                ),
                                   Center(
-                                      child: SizedBox(
-                                          height: 25,
-                                          width: 105,
-                                          child: Card(
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10),
-                                                  child: Center(
-                                                      child: Text(
-                                                          stationData[index]
-                                                              ['name'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ))))))),
-                                ]
+                                    child: SizedBox(
+                                        height: 25,
+                                        width: 105,
+                                        child: Card(
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Center(
+                                                    child: Text(
+                                                        stationData[index]
+                                                            ['name'],
+                                                        style: const TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ))))))),
+                              ]
                               ),
                               Container(
                                 height: 65,
@@ -155,21 +186,18 @@ class _StationDetailsState extends State<StationDetails> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(width: 30),
-                                    
                                     iconButton(
-                                      icon: Icon(Icons.directions_bus,
-                                          color: Colors.white),
+                                      icon: Icon(Icons.info,color: Colors.white),
                                       onPressedb: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const NewBuses()));
+                                                    const tripsDetails()));
                                         // Navigator.pushNamed(context, Buses.id);
                                       },
                                     ),
                                     iconButton(
-                                        icon: Icon(Icons.share_location,
-                                            color: Colors.white),
+                                        icon: Icon(Icons.share_location,color: Colors.white),
                                         onPressedb: () {
                                           getMapDetails(
                                               data.station[index], context);
@@ -179,12 +207,21 @@ class _StationDetailsState extends State<StationDetails> {
                                       icon: Icon(Icons.device_unknown,
                                           color: Colors.white),
                                       onPressedb: () {
-                                        myPupUp(
-                                          stationData[index].id
-                                        );
+                                        myPupUp(stationData[index].id);
 
                                         //     Navigator.of(context).push(MaterialPageRoute(
                                         // builder: (context) => const GetComments()));
+                                      },
+                                    ),
+                                    iconButton(
+                                      icon: Icon(Icons.plus_one,
+                                          color: Colors.white),
+                                      onPressedb: () async {
+                                        await getRole();
+                                        isAdmin
+                                            ? AddTripPopUP(
+                                                stationData[index]['name'])
+                                            : 'you are not admin';
                                       },
                                     ),
                                   ],
@@ -201,23 +238,36 @@ class _StationDetailsState extends State<StationDetails> {
         ]));
   }
 
-  myPupUp(String documentID) {
-
+  AddTripPopUP(String documentID) {
     showDialog(
         context: context,
         builder: (context) {
-          return 
-          AlertDialog(
+          return AlertDialog(
             contentPadding: EdgeInsets.all(10),
             insetPadding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                15
-              )
-            )
-          ),
-          
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            content: SizedBox(
+              height: 250,
+              width: 350,
+              child: DefaultTabController(
+                length: 2,
+                child: AddTrip(documentID: documentID),
+              ),
+            ),
+          );
+        });
+  }
+
+  myPupUp(String documentID) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            insetPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
             content: SizedBox(
               height: 600,
               width: 350,
@@ -225,16 +275,21 @@ class _StationDetailsState extends State<StationDetails> {
                   length: 2,
                   child: Scaffold(
                     appBar: AppBar(
-                      backgroundColor: busblackBlue,
-
+                        backgroundColor: busblackBlue,
                         bottom: TabBar(tabs: <Tab>[
-                      Tab(icon: Icon(Icons.directions_bus_outlined), text: 'Station info',),
-                      Tab(icon: Icon(Icons.message_outlined), text: 'Comments',),
-                    ])),
+                          Tab(
+                            icon: Icon(Icons.directions_bus_outlined),
+                            text: 'Station info',
+                          ),
+                          Tab(
+                            icon: Icon(Icons.message_outlined),
+                            text: 'Comments',
+                          ),
+                        ])),
                     body: Container(
                       child: TabBarView(
                         children: [
-                          GetStationsInfo(documentID: documentID),
+                        GetStationsInfo(documentID: documentID),
                         GetComments(),
                       ]),
                     ),

@@ -46,33 +46,32 @@ class _BarcodeState extends State<Barcode> {
     return MaterialApp(
         home: Scaffold(
             backgroundColor: busbottom,
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: Image(image: AssetImage('images/scanMe.png')),
-                        ),
-                        SizedBox(height: 20),
-                        Container(
-                          width: 180,
-                          child: ElevatedButton(
-                            onPressed: () => scanQR(),
-                            child: Text('Start barcode scan'),
-                            style: secondButton,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SelectableLinkify(
-                          onOpen: _onOpen,
-                          // textScaleFactor: 4,
-                          text: 'Scan result : $_scanBarcode\n',
-                        ),
-                      ]));
-            })));
+            body: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Image(image: AssetImage('images/scanMe.png')),
+                  ),
+                  SizedBox(height: 20),
+                  Container( // Container for button 
+                    width: 180, 
+                    child: ElevatedButton(
+                      onPressed: () => scanQR(),
+                      child: Text('Start barcode scan'),
+                      style: secondButton,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SelectableLinkify(
+                    onOpen: _onOpen,
+                    // textScaleFactor: 4,
+                    text: 'Scan result : $_scanBarcode\n',
+                  ),
+                ])
+            
+            )
+            );
   }
 
   Future<void> _onOpen(LinkableElement link) async {

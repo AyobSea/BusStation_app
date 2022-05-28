@@ -53,21 +53,21 @@ class _GetStationsInfoState extends State<GetStationsInfo> {
                       ),
                       SizedBox(height: 12,),
                       stationInfo(
-                        stationName: 'Station Name:',
+                        stationName: 'Station Name: ',
                         theName: stationDetailsData['name'],
                       ),
                       SizedBox(height: 12,),
                       stationInfo(
-                        stationName: 'Station Landmark:',
+                        stationName: 'Station Landmark: ',
                         theName: stationDetailsData['nearby'],
                       ),
                       SizedBox(height: 12,),
                       stationInfo(
-                          stationName: 'Station ID:',
+                          stationName: 'Station ID: ',
                           theName: stationDetailsData['statID']),
                       SizedBox(height: 12,),
                       stationInfo(
-                        stationName: 'Station street:',
+                        stationName: 'Station street: ',
                         theName: stationDetailsData['street'],
                       ),
                     ],
