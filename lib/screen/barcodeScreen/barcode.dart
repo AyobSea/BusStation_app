@@ -46,10 +46,9 @@ class _BarcodeState extends State<Barcode> {
     return MaterialApp(
         home: Scaffold(
             backgroundColor: busbottom,
-            body: Flex(
-                direction: Axis.vertical,
+            body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   Center(
                     child: Image(image: AssetImage('images/scanMe.png')),
                   ),

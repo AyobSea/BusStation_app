@@ -186,16 +186,16 @@ class _StationDetailsState extends State<StationDetails> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(width: 30),
-                                    iconButton(
-                                      icon: Icon(Icons.info,color: Colors.white),
-                                      onPressedb: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const tripsDetails()));
-                                        // Navigator.pushNamed(context, Buses.id);
-                                      },
-                                    ),
+                                    // iconButton(
+                                    //   icon: Icon(Icons.info,color: Colors.white),
+                                    //   onPressedb: () {
+                                    //     Navigator.of(context).push(
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 const tripsDetails()));
+                                    //     // Navigator.pushNamed(context, Buses.id);
+                                    //   },
+                                    // ),
                                     iconButton(
                                         icon: Icon(Icons.share_location,color: Colors.white),
                                         onPressedb: () {
@@ -248,7 +248,7 @@ class _StationDetailsState extends State<StationDetails> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             content: SizedBox(
-              height: 250,
+              height: 300,
               width: 350,
               child: DefaultTabController(
                 length: 2,

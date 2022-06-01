@@ -176,46 +176,46 @@ class _tripsDetailsState extends State<tripsDetails> {
                               ),
                             ],
                           ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Color(0xffDFE0DF),
-                                      onPrimary: Colors.black,
-                                      side: BorderSide(
-                                          width: 1, color: Colors.black)),
-                                  onPressed: () {
-                                    _selectTime();
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text('Select trip time'),
-                                      Icon(Icons.arrow_right)
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 160,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffDFE0DF),
-                                    border: Border.all(
-                                        color: busblackBlue, width: 1),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _time.format(context),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Text(distance != null
-                              ? '$distance KM to readh distination'
-                              : '')
+                          // Container(
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     children: [
+                          //       ElevatedButton(
+                          //         style: ElevatedButton.styleFrom(
+                          //             primary: Color(0xffDFE0DF),
+                          //             onPrimary: Colors.black,
+                          //             side: BorderSide(
+                          //                 width: 1, color: Colors.black)),
+                          //         onPressed: () {
+                          //           _selectTime();
+                          //         },
+                          //         child: Row(
+                          //           children: [
+                          //             Text('Select trip time'),
+                          //             Icon(Icons.arrow_right)
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       Container(
+                          //         width: 160,
+                          //         height: 35,
+                          //         decoration: BoxDecoration(
+                          //           color: Color(0xffDFE0DF),
+                          //           border: Border.all(
+                          //               color: busblackBlue, width: 1),
+                          //         ),
+                          //         child: Center(
+                          //           child: Text(
+                          //             _time.format(context),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // Text(distance != null
+                          //     ? '$distance KM to readh distination'
+                          //     : '')
                         ],
                       ),
                     ),
@@ -248,23 +248,42 @@ class _tripsDetailsState extends State<tripsDetails> {
         Center(
           child: SingleChildScrollView(
             child: SizedBox(
-              height: 480,
+              height: 120,
               width: 380,
               child: Card(
                 child: DottedBorder(
                   child: Center(
-                    child: Row(
+                    child: Column(
                       children: [
-                        Text(
-                          trips.data()['StartingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        
+                        Row(
+                          children: [
+                            Text(' from : '),
+                            Text(
+                              trips.data()['StartingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 20,),
-                        Text(
-                          trips.data()['EndingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        SizedBox(height: 15,),
+                        Row(
+                          children: [
+                            Text(' to : '),
+                            
+                            Text(
+                              trips.data()['EndingTrip'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                        Text(' ExpectedTime : '),
-                        Text(
-                          trips.data()['ExpectedTime'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        SizedBox(height: 15,),
+                        Row(
+                          children: [
+                            Text(' ExpectedTime : '),
+                            Text(
+                              trips.data()['ExpectedTime'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            
+                            Text(' min '),
+                          ],
                         ),
                       ],
                     ),
@@ -297,8 +316,8 @@ class SelectStation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: SizedBox(
-        height: 90,
-        width: 170,
+        height: 50,
+        width: 150,
         child: DropdownButtonFormField(
           decoration: InputDecoration(
             filled: true,

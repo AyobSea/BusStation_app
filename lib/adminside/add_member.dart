@@ -173,7 +173,7 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                           'first': _firstname,
                           'last': _lastname,
                           'street': _street,
-                          'role': false,
+                          'role': true,
                         });
     
                         Navigator.of(context).push(MaterialPageRoute(

@@ -22,9 +22,7 @@ class _AddTripState extends State<AddTrip> {
 
   String selected = 'please select';
 
-  String? from;
-  String? to;
-  String? distance;
+  String? from,  to, distance, ExpectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,28 @@ class _AddTripState extends State<AddTrip> {
                                   CheckLike();
                                 });
                               }),
+                              
                         ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text('Expected time: '),
+                      SizedBox(
+                        height: 60,
+                        width: 80,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(borderSide: BorderSide(
+                                          width: 1, color: busWhite
+                                        ))
+                                      ),
+                                      onChanged: ((value) {
+                                        ExpectedTime = value;
+                                      }),
+                                    ),
                       ),
                     ],
                   )
@@ -105,7 +124,8 @@ class _AddTripState extends State<AddTrip> {
                           .doc()
                           .set({
                         'StartingTrip': widget.documentID,
-                        'EndingTrip': to
+                        'EndingTrip': to,
+                        'ExpectedTime' : ExpectedTime
                       }); 
                       Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => AdminHomePage()));
@@ -150,7 +170,7 @@ class SelectStation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: SizedBox(
-        height: 50,
+        height: 60,
         width: 140,
         child: DropdownButtonFormField(
           decoration: InputDecoration(
